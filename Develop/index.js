@@ -2,7 +2,7 @@
 // Packages needed for this application
 var fs = require("fs");
 var inquirer = require("inquirer");
-var generateMarkdown = require("./generate");
+var generate = require("./generate");
 
 // Array of questions for user input
 const questions = [
@@ -13,7 +13,7 @@ const questions = [
   },
   {
     type: "input",
-    name: "short description",
+    name: "shortdescription",
     message: "give short description of your project:",
   },
   {
@@ -28,13 +28,13 @@ const questions = [
   },
   {
     type: "input",
-    name: "github link",
+    name: "githublink",
     message: "Github profile link:",
   },
 {
   type: "input",
   name: "email",
-  message: "What is your email address?"
+  message: " email address: "
 },
   
   {
@@ -45,19 +45,19 @@ const questions = [
   },
   {
     type: "input",
-    name: "tests",
+    name: "tests3",
     message: "required tests:",
   },
 
   {
     type: "input",
-    name: "tests",
+    name: "tests2",
     message: "required tests:",
   },
 
   {
     type: "input",
-    name: "tests",
+    name: "tests1",
     message: "required tests:",
   },
 
@@ -69,13 +69,19 @@ const questions = [
 
   {
     type: "input",
-    name: "readmeTitle",
-    message: " name your readme file (excluding .md):",
+    name: "userstory",
+    message: " user story",
   },
 
   {
     type: "input",
-    name: "live link",
+    name: "criteria",
+    message: " criteria",
+  },
+
+  {
+    type: "input",
+    name: "livelink",
     message: "project live link:",
   },
 
@@ -86,20 +92,16 @@ const questions = [
   },
 ];
 
-// Function to write README file
-const writeToFile = (fileName, data) =>
-  fs.writeFile(fileName, generate(data), (err) =>
-    err
-      ? console.log(err)
-      : console.log("success!")
-  );
 
 // Function to initialize app
-const init = () => {
-  inquirer.prompt(questions).then((answers) => {
-    writeToFile(`${answers.readmeTitle}.md`, answers);
-  });
-};
+inquirer.prompt(questions).then(function(response) {
+    console.log(response);
+    
+     var content = generate (response);
+     console.log(content);
+      fs.writeFile("./ReadMe.md", content, function(err){
+          if (err) throw err
+          console.log("success");
+      });
+ } );
 
-// Function call to initialize app
-init();
